@@ -19,6 +19,22 @@ CommentStore = assing({}, EventEmitter.prototype, {
 
   getAll: function () {
     return comments;
+  },
+
+  getById: function (id) {
+    return comments.filter(function (comment) {
+      return comment.id === id;
+    })[0];
+  },
+
+  getMostLiked: function () {
+    return comments.reduce(function (iterator, comment, index) {
+      iterator = comment.likes > iterator.likes ? comment : iterator;
+      return iterator;
+    }, {
+      text: 0,
+      likes: 0
+    });
   }
 });
 
@@ -30,7 +46,14 @@ AppDispatcher.register(function (action) {
       CommentStore.emitChange();
       break;
 
+    case 'LIKE_COMMENT':
+      var comment = CommentStore.getById(action.comment.id);
+      comment.likes++;
+      CommentStore.emitChange();
+      break;
+
     default:
+
   }
 });
 

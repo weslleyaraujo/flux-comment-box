@@ -1,8 +1,9 @@
 var React = require('react'),
   CommentStore = require('../stores/comment-store');
+  CommentActionsLikes = require('../actions/comment-action-likes');
 
 
-var Comments = React.createClass({
+module.exports = React.createClass({
 
   onChange: function () {
     this.setState(CommentStore.getAll())
@@ -22,15 +23,33 @@ var Comments = React.createClass({
     CommentStore.removeChangeListener(this.onChange);
   },
 
-  render: function () {
+  getCommentId: function (element) {
+    return element.attributes['data-comment-id'].value;
+  },
 
-    var comments = this.state.comments.map(function (comment, index) {
+  onClickLike: function (event) {
+
+     CommentActionsLikes.likeComment({
+       id: this.getCommentId(event.currentTarget)
+     });
+
+     event.preventDefault();
+  },
+
+  getComments: function () {
+    return this.state.comments.map(function (comment, index) {
       return (
         <div className='comment' key={'comment-' +index}>
-          {comment.text}
+          <p>{comment.text}</p>
+          <p>{comment.likes}</p>
+          <a href="#" onClick={this.onClickLike} data-comment-id={comment.id}>Like!</a>
         </div>
       );
-    });
+    }.bind(this));
+  },
+
+  render: function () {
+    var comments = this.getComments();
 
     return(
       <div className='comments'>
@@ -40,5 +59,3 @@ var Comments = React.createClass({
   }
 
 });
-
-module.exports = Comments;

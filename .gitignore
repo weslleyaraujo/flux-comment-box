@@ -3,3 +3,12 @@
 /node_modules
 /dist/scripts/*
 npm-debug.log
+
+### Vim ###
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
+
