@@ -1,6 +1,6 @@
-## Flux Starter Kit
+## Flux Comment Box
 
-This is the accompanying starter kit for the Flux Quick Start Guide.
+This was a tutorial followed by [this](http://www.jackcallister.com/2015/02/26/the-flux-quick-start-guide.html) post.
 
 ## Setup
 
