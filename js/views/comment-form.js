@@ -1,13 +1,26 @@
-var React = require('react');
+var React = require('react'),
+  CommentActionCreators = require('../actions/comment-action-creators');
 
-var CommentForm = React.createClass({
+module.exports = React.createClass({
+
+  onSubmit: function () {
+    var textNode = this.refs.text.getDOMNode(),
+      text = textNode.value;
+
+     textNode.value = '';
+
+     CommentActionCreators.createComment({
+       text: text
+     });
+  },
 
   render: function() {
     return (
-      <h1>Great Scott, it works!</h1>
+      <div className='comment-form'>
+        <textarea ref='text' />
+        <button onClick={this.onSubmit}>Submit</button>
+      </div>
     );
   }
 
 });
-
-module.exports = CommentForm;
