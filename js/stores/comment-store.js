@@ -2,9 +2,23 @@ var AppDispatcher = require('../dispatcher/app-dispatcher'),
   EventEmitter = require('events').EventEmitter,
   CommentStore,
   assing = require('object-assign'),
+  _ = require('underscore'),
   comments = [];
 
+function removeItem (comment) {
+}
+
 CommentStore = assing({}, EventEmitter.prototype, {
+  save: function () {
+    window.localStorage.setItem('comments', JSON.stringify(comments));
+  },
+
+  prepare: function () {
+    try {
+      comments = JSON.parse(window.localStorage.getItem('comments').split(','));
+    } catch (e) { }
+  },
+
   emitChange: function () {
     this.emit('change');
   },
@@ -38,17 +52,32 @@ CommentStore = assing({}, EventEmitter.prototype, {
   }
 });
 
+CommentStore.prepare();
+
 AppDispatcher.register(function (action) {
+
+
   switch (action.actionType) {
 
     case 'CREATE_COMMENT':
       comments.push(action.comment);
+      CommentStore.save();
       CommentStore.emitChange();
       break;
 
     case 'LIKE_COMMENT':
       var comment = CommentStore.getById(action.comment.id);
       comment.likes++;
+      CommentStore.save();
+      CommentStore.emitChange();
+      break;
+
+    case 'DELETE_COMMENT':
+      comments = _.filter(comments, function (item) {
+        return item.id !== action.comment.id;
+      });
+      comments = comments;
+      CommentStore.save();
       CommentStore.emitChange();
       break;
 

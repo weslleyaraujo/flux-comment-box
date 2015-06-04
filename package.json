@@ -13,6 +13,7 @@
   "devDependencies": {
     "jsx-loader": "^0.12.2",
     "reactify": "^0.15.2",
+    "underscore": "^1.8.3",
     "webpack": "^1.5.3"
   },
   "scripts": {
