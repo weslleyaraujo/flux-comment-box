@@ -76,12 +76,12 @@ AppDispatcher.register(function (action) {
       comments = _.filter(comments, function (item) {
         return item.id !== action.comment.id;
       });
-      comments = comments;
       CommentStore.save();
       CommentStore.emitChange();
       break;
 
     default:
+      break;
 
   }
 });

@@ -7,7 +7,9 @@ var React = require('react'),
 module.exports = React.createClass({
 
   onChange: function () {
-    this.setState(CommentStore.getAll())
+    this.setState({
+      comments: CommentStore.getAll()
+    });
   },
 
   getInitialState: function () {
@@ -61,7 +63,6 @@ module.exports = React.createClass({
 
   render: function () {
     var comments = this.getComments();
-    console.log(this.state.comments);
     return(
       <div className='comments'>
         {comments}
